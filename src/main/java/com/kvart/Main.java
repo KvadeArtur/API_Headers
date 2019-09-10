@@ -1,7 +1,11 @@
 package com.kvart;
 
 import com.google.gson.Gson;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +54,41 @@ public class Main {
         /*
         3*) Сделать то же самое используя библиотеку okhttp3
          */
+
+        System.out.println();
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://dl.dropboxusercontent.com/s/vxnydq4xjkmefrp/CLUVAL.java")
+                .get()
+                .addHeader("Range", "bytes=0-500")
+                .build();
+
+        String result = "";
+        Response response = null;
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        request = new Request.Builder()
+                .url("https://dl.dropboxusercontent.com/s/vxnydq4xjkmefrp/CLUVAL.java")
+                .get()
+                .addHeader("Range", "bytes=501-2212")
+                .build();
+
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result += response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(result);
+
     }
 
 }

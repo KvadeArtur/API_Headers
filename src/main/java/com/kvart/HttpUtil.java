@@ -38,7 +38,7 @@ public class HttpUtil {
 
             status = urlConnection.getResponseCode();
 
-            if (status == HttpURLConnection.HTTP_OK) {
+            if (status == HttpURLConnection.HTTP_OK || status == HttpURLConnection.HTTP_PARTIAL) {
                 result = getStringFromStream(urlConnection.getInputStream());
             }
         } catch (Exception e) {
